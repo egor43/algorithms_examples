@@ -38,9 +38,40 @@ def selection_sort(sequence):
     return sorted_list
 
 
+def quick_sort(sequence):
+    """
+        Возвращает отсортированную последовательность.
+        Используется рекурсивный алгоритм быстрой сортировки
+        Params:
+            sequence - последовательность
+        Return:
+            отсортированый список
+    """
+    # Базовый случай
+    if len(sequence) < 2:
+        return sequence
+    else:
+        # Индекс опорного элемента (выбираем средний)
+        pivot_index = len(sequence) // 2
+        # Опроный элемент
+        pivot = sequence[pivot_index]
+        # Подмассив всех элементов меньших опорного
+        less = []
+        # Подмассив всех элементов больших опорного
+        greater = []
+        for element in sequence[:pivot_index] + sequence[pivot_index+1:]:
+            if element > pivot:
+                greater.append(element)
+            else:
+                less.append(element)
+        return quick_sort(less) + [pivot] + quick_sort(greater)
+
+
 # Самотестирование
 if __name__ == "__main__":
     unsorted_sequence = [5, 3, 8, 7, 6, 0, 1, 2, 9, 4]
     sorted_sequence = sorted(unsorted_sequence)
-    # Проверяем, что сортировка выбором, действительно, сортирует
+    # Тестирование сортировки выбором
     assert selection_sort(unsorted_sequence) == sorted_sequence
+    # Тестирование быстрой сортировки
+    assert quick_sort(unsorted_sequence) == sorted_sequence
