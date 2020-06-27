@@ -32,7 +32,7 @@ def selection_sort(sequence):
     sequence = sequence.copy()
     sorted_list = []
     for _ in range(len(sequence)):
-        # Функцию _find_smallest можно заменить на: min(enumerate(sequence), key=lambda enum_tuple: enum_tuple[1])[0]
+        # Функцию _find_smallest можно заменить на: min(enumerate(sequence), key=lambda enum_tuple: enum_tuple[1])[0]        #smallest_index = 
         smallest_index = _find_smallest(sequence)
         sorted_list.append(sequence.pop(smallest_index))
     return sorted_list
