@@ -43,10 +43,11 @@ def bfs(root_node, check_func):
     nodes = deque([root_node])
     while nodes:
         current_node = nodes.popleft()
-        if check_func(current_node):
-            return current_node
-        nodes.extend(current_node["child"])
-        visited_nodes.add(id(current_node))
+        if not id(current_node) in visited_nodes:
+            if check_func(current_node):
+                return current_node
+            nodes.extend(current_node["child"])
+            visited_nodes.add(id(current_node))
     return None
 
 
