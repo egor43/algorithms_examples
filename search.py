@@ -27,10 +27,12 @@ def binary_search(item, sorted_list):
     return None
 
 
-def bfs(root_node, check_func):
+def graph_search(algorithm, root_node, check_func):
     """
         Поиск по графу в ширину.
         Params:
+            algorithm - алгоритм поиска по графу.
+                        Допустимые значения: "BFS" и "DFS"
             root_node - узел графа от которого будет осуществлен поиск.
                         Используются ноды вида: {"name": "node_name", "child": [node_1, node_2, ...]}
             check_func - функция проверяет является ли текущий элемент - искомым
@@ -41,8 +43,13 @@ def bfs(root_node, check_func):
     visited_nodes = set()
     # Очередь узлов, ожидающих проверки
     nodes = deque([root_node])
+    # Метод получения следующего узла зависит от алгоритма
+    if algorithm == "BFS":
+        get_next_node = nodes.popleft
+    elif algorithm == "DFS":
+        get_next_node = nodes.pop
     while nodes:
-        current_node = nodes.popleft()
+        current_node = get_next_node()
         if not id(current_node) in visited_nodes:
             if check_func(current_node):
                 return current_node
@@ -66,4 +73,5 @@ if __name__ == "__main__":
     clare = {"name": "Clare", "child": [tom, johny]}
     alice = {"name": "Alice", "child": [paggie]}
     you = {"name": "You", "child": [bob, alice, clare]}
-    assert paggie == bfs(you, lambda node: node["name"] == "Paggie")
+    assert paggie == graph_search("BFS", you, lambda node: node["name"] == "Paggie")
+    assert anuged == graph_search("DFS", you, lambda node: node["name"] == "Anuged")
