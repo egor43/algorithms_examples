@@ -158,10 +158,13 @@ if __name__ == "__main__":
     you = {"name": "You", "child": [bob, alice, clare]}
     assert paggie == graph_search("BFS", you, lambda node: node["name"] == "Paggie")
     assert anuged == graph_search("DFS", you, lambda node: node["name"] == "Anuged")
+    
     # Тестовый граф для алгоритма Дейкстры
     fin = {"name": "fin", "child": []}
     a_node = {"name": "A", "child": [{"distance": 1, "node": fin}]}
     b_node = {"name": "B", "child": [{"distance": 5, "node": fin}, {"distance": 3, "node": a_node}]}
     start = {"name": "start", "child": [{"distance": 6, "node": a_node}, {"distance": 2, "node": b_node}]}
     dijkstra_table = dijkstra_search(start)
-    print(dijkstra_table)
+    assert {'node': {'name': 'A', 'child': [{'distance': 1, 'node': fin}]}, 'distance': 5, 'from': b_node} in dijkstra_table.values()
+    assert {'node': {'name': 'B', 'child': [{'distance': 5, 'node': fin}, {'distance': 3, 'node': a_node}]}, 'distance': 2, 'from': start} in dijkstra_table.values()
+    assert {'node': {'name': 'fin', 'child': []}, 'distance': 6, 'from': a_node} in dijkstra_table.values()
